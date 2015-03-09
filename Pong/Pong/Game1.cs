@@ -19,6 +19,7 @@ namespace Pong
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Player player1;
         Sprite background;
         Sprite ball;
 
@@ -53,6 +54,7 @@ namespace Pong
             background = new Sprite(Content.Load<Texture2D>("background"), new Vector2(0f, 0f), new Vector2(screenWidth, screenHeight) );
             ball = new Sprite(Content.Load<Texture2D>("ball"), new Vector2(screenWidth/2, screenHeight/2),
                 new Vector2(20, 20), new Vector2(3,3), new Rectangle(0, 10, screenWidth, screenHeight - 20));
+            player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(10, screenHeight / 2), new Vector2(screenWidth * 0.03f, screenHeight * 0.09f), new Rectangle(0, 0, Convert.ToInt32(screenWidth * 0.03f), screenHeight));
         }
 
         protected override void UnloadContent()
@@ -65,6 +67,7 @@ namespace Pong
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             ball.ChangePosition((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
+
             base.Update(gameTime);
         }
 
@@ -75,6 +78,7 @@ namespace Pong
             spriteBatch.Begin();
             spriteBatch.Draw(background.Texture, background.Border, Color.White);
             spriteBatch.Draw(ball.Texture, ball.Border, Color.White);
+            spriteBatch.Draw();
             spriteBatch.End();
             // TODO: Add your drawing code here
 
