@@ -25,20 +25,20 @@ namespace Pong
 
         public Sprite(Texture2D texture, Vector2 placement, Vector2 size)
         {
-            this.Texture = texture;
-            this.Placement = placement;
-            this.Size = size;
-            this.Speed = new Vector2(0,0);
-            this.AllowedMoveField = new Rectangle(0, 0, 0,0 );
+            Texture = texture;
+            Placement = placement;
+            Size = size;
+            Speed = new Vector2(0,0);
+            AllowedMoveField = new Rectangle(0, 0, 0,0 );
         }
 
         public Sprite(Texture2D texture, Vector2 placement, Vector2 size, Vector2 speed, Rectangle allowedMoveField)
         {
-            this.Texture = texture;
-            this.Placement = placement;
-            this.Size = size;
-            this.Speed = speed;
-            this.AllowedMoveField = allowedMoveField;
+            Texture = texture;
+            Placement = placement;
+            Size = size;
+            Speed = speed;
+            AllowedMoveField = allowedMoveField;
         }
 
         public void ChangePosition(float timeStep)

@@ -24,8 +24,8 @@ namespace Pong
         Sprite background;
         Sprite ball;
 
-        public const int screenWidth = 768;
-        public const int screenHeight = 512;
+        public const int ScreenWidth = 768;
+        public const int ScreenHeight = 512;
 
         public Game1()
             : base()
@@ -33,11 +33,11 @@ namespace Pong
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferHeight = screenHeight;
-            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = ScreenHeight;
+            graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.ApplyChanges();
 
-            this.Window.Title = "Pong";
+            Window.Title = "Pong";
 
         }
 
@@ -52,15 +52,15 @@ namespace Pong
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            background = new Sprite(Content.Load<Texture2D>("background"), new Vector2(0f, 0f), new Vector2(screenWidth, screenHeight) );
+            background = new Sprite(Content.Load<Texture2D>("background"), new Vector2(0f, 0f), new Vector2(ScreenWidth, ScreenHeight) );
 
-            ball = new Sprite(Content.Load<Texture2D>("ball"), new Vector2(screenWidth/2, screenHeight/2),
-                new Vector2(20, 20), new Vector2(8,8), new Rectangle(0, 10, screenWidth, screenHeight - 20));
+            ball = new Sprite(Content.Load<Texture2D>("ball"), new Vector2(ScreenWidth/2, ScreenHeight/2),
+                new Vector2(20, 20), new Vector2(8,8), new Rectangle(0, 10, ScreenWidth, ScreenHeight - 20));
 
-            player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(40, screenHeight / (float)2.0), 
-                new Vector2(screenWidth * 0.03f, screenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(screenWidth * 0.1f), screenHeight - 24 ), Keys.Up, Keys.Down);
-            player2 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(screenWidth - 40 - screenWidth * 0.03f, screenHeight / (float) 2.0 ), 
-                new Vector2(screenWidth * 0.03f, screenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(screenWidth * 0.1f), screenHeight - 24 ), Keys.W, Keys.S);
+            player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(40, ScreenHeight / (float)2.0), 
+                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.Up, Keys.Down, 1);
+            player2 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(ScreenWidth - 40 - ScreenWidth * 0.03f, ScreenHeight / (float) 2.0 ), 
+                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.W, Keys.S, 2);
         }
 
         protected override void UnloadContent()
@@ -93,7 +93,6 @@ namespace Pong
             spriteBatch.Draw(player1.Texture, player1.Border, Color.White);
             spriteBatch.Draw(player2.Texture, player2.Border, Color.Blue);
             spriteBatch.End();
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

@@ -18,6 +18,7 @@ namespace Pong
         public Rectangle AllowedMoveField;
         public Keys GoUp;
         public Keys GoDown;
+        public int PlayerNumber;
         public Rectangle Border
         {
             get
@@ -26,14 +27,15 @@ namespace Pong
             }
         }
 
-        public Player(Texture2D texture, Vector2 placement, Vector2 size, Rectangle allowedMoveField, Keys goUp, Keys goDown )
+        public Player(Texture2D texture, Vector2 placement, Vector2 size, Rectangle allowedMoveField, Keys goUp, Keys goDown, int playerNumber)
         {
-            this.Texture = texture;
-            this.Placement = placement;
-            this.Size = size;
-            this.AllowedMoveField = allowedMoveField;
-            this.GoUp = goUp;
-            this.GoDown = goDown;
+            Texture = texture;
+            Placement = placement;
+            Size = size;
+            AllowedMoveField = allowedMoveField;
+            GoUp = goUp;
+            GoDown = goDown;
+            PlayerNumber = playerNumber;
         }
 
         public void ChangePosition(float timeStep)
@@ -71,7 +73,11 @@ namespace Pong
                 var normalizedRelativeIntersectY = relativeIntersectY / (Size.Y / 2.0f);
                 var bounceAngle = normalizedRelativeIntersectY * maxBounceAngle;
 
-                ball.Speed.X = (float) (ball.Speed.Length() * Math.Cos(bounceAngle));
+                if (PlayerNumber == 1)
+                    ball.Speed.X = (float) (ball.Speed.Length()*Math.Cos(bounceAngle));
+                else if (PlayerNumber ==2)
+                    ball.Speed.X = (float) (ball.Speed.Length()*-Math.Cos(bounceAngle));
+
                 ball.Speed.Y = (float) (ball.Speed.Length() * - Math.Sin(bounceAngle));
 
             }
