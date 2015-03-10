@@ -16,6 +16,8 @@ namespace Pong
         public Vector2 Size;
         public Vector2 Speed;
         public Rectangle AllowedMoveField;
+        public Keys GoUp;
+        public Keys GoDown;
         public Rectangle Border
         {
             get
@@ -24,12 +26,14 @@ namespace Pong
             }
         }
 
-        public Player(Texture2D texture, Vector2 placement, Vector2 size, Rectangle allowedMoveField)
+        public Player(Texture2D texture, Vector2 placement, Vector2 size, Rectangle allowedMoveField, Keys goUp, Keys goDown )
         {
             this.Texture = texture;
             this.Placement = placement;
             this.Size = size;
             this.AllowedMoveField = allowedMoveField;
+            this.GoUp = goUp;
+            this.GoDown = goDown;
         }
 
         public void ChangePosition(float timeStep)
@@ -46,20 +50,20 @@ namespace Pong
         {
             var keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(GoUp))
                 Speed.Y = -8;
-            if (keyboardState.IsKeyDown(Keys.Down))
+            if (keyboardState.IsKeyDown(GoDown))
                 Speed.Y = 8;
 
             ChangePosition(timeStep);
-
+            
            Speed.Y = 0;
            Speed.X = 0;
         }
 
         public void CollisionControll(Sprite ball)
         {
-            const float maxBounceAngle = (float) (5*Math.PI/12);
+            const float maxBounceAngle = (float) (2.3*Math.PI/12);
 
             if (Border.Intersects(ball.Border))
             {
@@ -68,7 +72,7 @@ namespace Pong
                 var bounceAngle = normalizedRelativeIntersectY * maxBounceAngle;
 
                 ball.Speed.X = (float) (ball.Speed.Length() * Math.Cos(bounceAngle));
-                ball.Speed.Y = (float) (ball.Speed.Length() * Math.Sin(bounceAngle));
+                ball.Speed.Y = (float) (ball.Speed.Length() * - Math.Sin(bounceAngle));
 
             }
 

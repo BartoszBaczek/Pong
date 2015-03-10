@@ -43,12 +43,12 @@ namespace Pong
 
         public void ChangePosition(float timeStep)
         {
-            if (Placement.X + Size.X > AllowedMoveField.Right)
-                Speed.X = -Speed.X;
-            if (Placement.X < AllowedMoveField.Left)
-                Speed.X = - Speed.X;
-            if (Placement.Y + Size.Y > AllowedMoveField.Bottom)
-                Speed.Y = - Speed.Y;
+            if (Placement.X + Size.X > AllowedMoveField.Right)              //
+                Speed.X = -Speed.X;                                         // TODO Usunac ograniczenie z prawej i lewej strony;
+            if (Placement.X < AllowedMoveField.Left)                        //
+                Speed.X = - Speed.X;                                        //
+            if (Placement.Y + Size.Y > AllowedMoveField.Bottom)             
+                Speed.Y = - Speed.Y;                                        
             if (Placement.Y < AllowedMoveField.Top)
                 Speed.Y = - Speed.Y;
             
