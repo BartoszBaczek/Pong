@@ -53,8 +53,9 @@ namespace Pong
 
             background = new Sprite(Content.Load<Texture2D>("background"), new Vector2(0f, 0f), new Vector2(screenWidth, screenHeight) );
             ball = new Sprite(Content.Load<Texture2D>("ball"), new Vector2(screenWidth/2, screenHeight/2),
-                new Vector2(20, 20), new Vector2(3,3), new Rectangle(0, 10, screenWidth, screenHeight - 20));
-            player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(10, screenHeight / 2), new Vector2(screenWidth * 0.03f, screenHeight * 0.09f), new Rectangle(0, 0, Convert.ToInt32(screenWidth * 0.03f), screenHeight));
+                new Vector2(20, 20), new Vector2(8,8), new Rectangle(0, 10, screenWidth, screenHeight - 20));
+            player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(40, screenHeight / (float)1.3), 
+                new Vector2(screenWidth * 0.03f, screenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(screenWidth * 0.1f), screenHeight - 24 ));
         }
 
         protected override void UnloadContent()
@@ -66,7 +67,10 @@ namespace Pong
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             ball.ChangePosition((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
+            player1.PadSteering((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
+            player1.CollisionControll(ball);
 
             base.Update(gameTime);
         }
@@ -78,7 +82,7 @@ namespace Pong
             spriteBatch.Begin();
             spriteBatch.Draw(background.Texture, background.Border, Color.White);
             spriteBatch.Draw(ball.Texture, ball.Border, Color.White);
-            spriteBatch.Draw();
+            spriteBatch.Draw(player1.Texture, player1.Border, Color.White);
             spriteBatch.End();
             // TODO: Add your drawing code here
 
