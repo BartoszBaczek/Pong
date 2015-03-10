@@ -58,9 +58,9 @@ namespace Pong
                 new Vector2(20, 20), new Vector2(8,8), new Rectangle(0, 10, ScreenWidth, ScreenHeight - 20));
 
             player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(40, ScreenHeight / (float)2.0), 
-                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.Up, Keys.Down, 1);
+                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.Up, Keys.Down, 1);
             player2 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(ScreenWidth - 40 - ScreenWidth * 0.03f, ScreenHeight / (float) 2.0 ), 
-                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.09f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.W, Keys.S, 2);
+                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.W, Keys.S, 2);
         }
 
         protected override void UnloadContent()
