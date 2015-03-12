@@ -13,7 +13,7 @@ namespace Pong
         public Vector2 Placement;
         public Vector2 Size;
         public Vector2 Speed;
-        public Rectangle AllowedMoveField;
+        private Rectangle AllowedMoveField;
 
         public Rectangle Border
         {
@@ -32,12 +32,12 @@ namespace Pong
             AllowedMoveField = new Rectangle(0, 0, 0,0 );
         }
 
-        public Sprite(Texture2D texture, Vector2 placement, Vector2 size, Vector2 speed, Rectangle allowedMoveField)
+        public Sprite(Texture2D texture, Vector2 placement, Vector2 size, Rectangle allowedMoveField)
         {
             Texture = texture;
             Placement = placement;
             Size = size;
-            Speed = speed;
+            Speed = new Vector2(8, 8);
             AllowedMoveField = allowedMoveField;
         }
 

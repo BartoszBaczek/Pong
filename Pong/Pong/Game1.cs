@@ -55,7 +55,7 @@ namespace Pong
             background = new Sprite(Content.Load<Texture2D>("background"), new Vector2(0f, 0f), new Vector2(ScreenWidth, ScreenHeight) );
 
             ball = new Sprite(Content.Load<Texture2D>("ball"), new Vector2(ScreenWidth/2, ScreenHeight/2),
-                new Vector2(20, 20), new Vector2(8,8), new Rectangle(0, 10, ScreenWidth, ScreenHeight - 20));
+                new Vector2(20, 20), new Rectangle(0, 10, ScreenWidth, ScreenHeight - 20));
 
             player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(40, ScreenHeight / (float)2.0), 
                 new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.Up, Keys.Down, 1);
@@ -90,8 +90,8 @@ namespace Pong
             spriteBatch.Begin();
             spriteBatch.Draw(background.Texture, background.Border, Color.White);
             spriteBatch.Draw(ball.Texture, ball.Border, Color.White);
-            spriteBatch.Draw(player1.Texture, player1.Border, Color.White);
-            spriteBatch.Draw(player2.Texture, player2.Border, Color.Blue);
+            spriteBatch.Draw(player1.Texture, player1.Border, Color.YellowGreen);
+            spriteBatch.Draw(player2.Texture, player2.Border, Color.YellowGreen);
             spriteBatch.End();
 
             base.Draw(gameTime);
