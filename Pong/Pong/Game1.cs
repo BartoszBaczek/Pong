@@ -23,9 +23,12 @@ namespace Pong
         Player player2;
         Sprite background;
         Sprite ball;
+        Bonus bonus1;
+        Bonus bonus2;
 
         public const int ScreenWidth = 768;
         public const int ScreenHeight = 512;
+
 
         public Game1()
             : base()
@@ -61,6 +64,9 @@ namespace Pong
                 new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.Up, Keys.Down, 1);
             player2 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(ScreenWidth - 40 - ScreenWidth * 0.03f, ScreenHeight / (float) 2.0 ), 
                 new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.W, Keys.S, 2);
+
+            bonus1 = new Bonus(Content.Load<Texture2D>("AccelerateBallicon"), new Vector2(30, 30), 1);
+            bonus2 = new Bonus(Content.Load<Texture2D>("DeaccelerateBallIcon"), new Vector2(30, 30), 2);
         }
 
         protected override void UnloadContent()
@@ -73,12 +79,15 @@ namespace Pong
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+
             ball.ChangePosition((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
 
             player1.PadSteering((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
             player2.PadSteering((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
             player1.CollisionControll(ball);
             player2.CollisionControll(ball);
+
+            
 
             base.Update(gameTime);
         }
@@ -88,10 +97,14 @@ namespace Pong
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+
             spriteBatch.Draw(background.Texture, background.Border, Color.White);
             spriteBatch.Draw(ball.Texture, ball.Border, Color.White);
             spriteBatch.Draw(player1.Texture, player1.Border, Color.YellowGreen);
             spriteBatch.Draw(player2.Texture, player2.Border, Color.YellowGreen);
+
+            spriteBatch.Draw(bonus1.Texture, bonus1.Border, Color.White);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
