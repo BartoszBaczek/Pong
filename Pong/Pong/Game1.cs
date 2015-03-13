@@ -3,6 +3,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -87,6 +88,9 @@ namespace Pong
             player1.CollisionControll(ball);
             player2.CollisionControll(ball);
 
+            bonus1.TryToAppear();
+            bonus2.TryToAppear();
+
             
 
             base.Update(gameTime);
@@ -103,7 +107,10 @@ namespace Pong
             spriteBatch.Draw(player1.Texture, player1.Border, Color.YellowGreen);
             spriteBatch.Draw(player2.Texture, player2.Border, Color.YellowGreen);
 
-            spriteBatch.Draw(bonus1.Texture, bonus1.Border, Color.White);
+            if (bonus1.State == 1)
+                spriteBatch.Draw(bonus1.Texture, bonus1.Border, Color.White);
+            if (bonus2.State == 1)
+            spriteBatch.Draw(bonus2.Texture, bonus2.Border, Color.White);
 
             spriteBatch.End();
 
