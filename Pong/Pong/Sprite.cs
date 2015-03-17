@@ -42,11 +42,7 @@ namespace Pong
         }
 
         public void ChangePosition(float timeStep)
-        {
-            if (Placement.X + Size.X > AllowedMoveField.Right)              //
-                Speed.X = -Speed.X;                                         // TODO Usunac ograniczenie z prawej i lewej strony;
-            if (Placement.X < AllowedMoveField.Left)                        //
-                Speed.X = - Speed.X;                                        //
+        { 
             if (Placement.Y + Size.Y > AllowedMoveField.Bottom)             
                 Speed.Y = - Speed.Y;                                        
             if (Placement.Y < AllowedMoveField.Top)
@@ -54,6 +50,14 @@ namespace Pong
             
 
             Placement += Speed * timeStep;
+        }
+
+        public void UpdatePoints(Player leftPlayer, Player RightPlayer)
+        {
+            if (Placement.X + Size.X > AllowedMoveField.Right)
+                leftPlayer.Points++;
+            else if (Placement.X < AllowedMoveField.Left)
+                RightPlayer.Points++;
         }
     }
 }

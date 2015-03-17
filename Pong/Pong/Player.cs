@@ -19,6 +19,7 @@ namespace Pong
         public Keys GoUp;
         public Keys GoDown;
         public int PlayerNumber;
+        public int Points;
         public Rectangle Border
         {
             get

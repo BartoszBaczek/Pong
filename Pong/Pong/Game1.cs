@@ -19,6 +19,7 @@ namespace Pong
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont scoreFont;
 
         Player player1;
         Player player2;
@@ -27,8 +28,12 @@ namespace Pong
         Bonus bonus1;
         Bonus bonus2;
 
+        GameModeChanger gameModeChanger;
+
         public const int ScreenWidth = 768;
-        public const int ScreenHeight = 512;
+        public const int GameFieldHeight = 512;
+        public const int ScoreFieldHeight = 50;
+        public const int ScreenHeight = GameFieldHeight + ScoreFieldHeight;
 
 
         public Game1()
@@ -56,18 +61,24 @@ namespace Pong
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            background = new Sprite(Content.Load<Texture2D>("background"), new Vector2(0f, 0f), new Vector2(ScreenWidth, ScreenHeight) );
 
-            ball = new Sprite(Content.Load<Texture2D>("ball"), new Vector2(ScreenWidth/2, ScreenHeight/2),
-                new Vector2(20, 20), new Rectangle(0, 10, ScreenWidth, ScreenHeight - 20));
+            scoreFont = Content.Load<SpriteFont>("RoboticFont");
 
-            player1 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(40, ScreenHeight / (float)2.0), 
-                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.Up, Keys.Down, 1);
-            player2 = new Player(Content.Load<Texture2D>("Pad"), new Vector2(ScreenWidth - 40 - ScreenWidth * 0.03f, ScreenHeight / (float) 2.0 ), 
-                new Vector2(ScreenWidth * 0.03f, ScreenHeight * 0.15f), new Rectangle(0, 12, Convert.ToInt32(ScreenWidth * 0.1f), ScreenHeight - 24 ), Keys.W, Keys.S, 2);
+            background = new Sprite(Content.Load<Texture2D>("Textures/background"), new Vector2(0f, ScoreFieldHeight), new Vector2(ScreenWidth, ScreenHeight - ScoreFieldHeight) );
 
-            bonus1 = new Bonus(Content.Load<Texture2D>("AccelerateBallicon"), new Vector2(30, 30), 1);
-            bonus2 = new Bonus(Content.Load<Texture2D>("DeaccelerateBallIcon"), new Vector2(30, 30), 2);
+            ball = new Sprite(Content.Load<Texture2D>("Textures/ball"), new Vector2(ScreenWidth / 2, GameFieldHeight / 2),
+                new Vector2(20, 20), new Rectangle(0, ScoreFieldHeight + 10, ScreenWidth, GameFieldHeight - 20));
+
+            player1 = new Player(Content.Load<Texture2D>("Textures/Pad"), new Vector2(40, ScoreFieldHeight + (GameFieldHeight / (float)2.0)), 
+                new Vector2(ScreenWidth * 0.03f, GameFieldHeight * 0.15f), new Rectangle(0, ScoreFieldHeight + 12, Convert.ToInt32(ScreenWidth * 0.1f), GameFieldHeight - 24 ), Keys.W, Keys.S, 1);
+            player2 = new Player(Content.Load<Texture2D>("Textures/Pad"), new Vector2(ScreenWidth - 40 - player1.Size.X, ScoreFieldHeight + (GameFieldHeight / (float)2.0)), 
+                new Vector2(ScreenWidth * 0.03f, GameFieldHeight * 0.15f), new Rectangle(0, ScoreFieldHeight + 12, Convert.ToInt32(ScreenWidth * 0.1f), GameFieldHeight - 24 ), Keys.Up, Keys.Down, 2);
+
+            bonus1 = new Bonus(Content.Load<Texture2D>("Textures/AccelerateBallicon"), new Vector2(30, 30), 1);
+            bonus2 = new Bonus(Content.Load<Texture2D>("Textures/DeaccelerateBallIcon"), new Vector2(30, 30), 2);
+
+            gameModeChanger = new GameModeChanger();
+
         }
 
         protected override void UnloadContent()
@@ -80,39 +91,50 @@ namespace Pong
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (gameModeChanger.GameMode == 1)
+            {
+                ball.ChangePosition((float) (gameTime.ElapsedGameTime.TotalMilliseconds/30));
+                player1.PadSteering((float) (gameTime.ElapsedGameTime.TotalMilliseconds/30));
+                player2.PadSteering((float) (gameTime.ElapsedGameTime.TotalMilliseconds/30));
+                player1.CollisionControll(ball);
+                player2.CollisionControll(ball);
+                ball.UpdatePoints(player1, player2);
+            }
+            if (gameModeChanger.MenuMode == 1)
+            {
+                
+            }
 
-            ball.ChangePosition((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
 
-            player1.PadSteering((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
-            player2.PadSteering((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 30));
-            player1.CollisionControll(ball);
-            player2.CollisionControll(ball);
-
-            bonus1.TryToAppear();
-            bonus2.TryToAppear();
-
-            
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(background.Texture, background.Border, Color.White);
-            spriteBatch.Draw(ball.Texture, ball.Border, Color.White);
-            spriteBatch.Draw(player1.Texture, player1.Border, Color.YellowGreen);
-            spriteBatch.Draw(player2.Texture, player2.Border, Color.YellowGreen);
-
-            if (bonus1.State == 1)
-                spriteBatch.Draw(bonus1.Texture, bonus1.Border, Color.White);
-            if (bonus2.State == 1)
-            spriteBatch.Draw(bonus2.Texture, bonus2.Border, Color.White);
-
-            spriteBatch.End();
+            GraphicsDevice.Clear(Color.Black);
+            if (gameModeChanger.GameMode == 1)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(background.Texture, background.Border, Color.White);
+                spriteBatch.Draw(ball.Texture, ball.Border, Color.White);
+                spriteBatch.Draw(player1.Texture, player1.Border, Color.YellowGreen);
+                spriteBatch.Draw(player2.Texture, player2.Border, Color.YellowGreen);
+                spriteBatch.DrawString(scoreFont, player1.Points.ToString(), new Vector2(100, (ScoreFieldHeight/2) - 24),
+                    Color.DarkGreen);
+                spriteBatch.DrawString(scoreFont, player2.Points.ToString(),
+                    new Vector2(ScreenWidth - 100, (ScoreFieldHeight/2) - 24), Color.DarkGreen);
+                if (bonus1.State == 1)
+                    spriteBatch.Draw(bonus1.Texture, bonus1.Border, Color.White);
+                if (bonus2.State == 1)
+                    spriteBatch.Draw(bonus2.Texture, bonus2.Border, Color.White);
+                spriteBatch.End();
+            }
+            else if (gameModeChanger.MenuMode == 1)
+            {
+                
+            }
+            
 
             base.Draw(gameTime);
         }
