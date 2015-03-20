@@ -32,6 +32,16 @@ namespace Pong
             AllowedMoveField = new Rectangle(0, 0, 0,0 );
         }
 
+        public Sprite(Texture2D texture)
+        {
+            Texture = texture;
+            Placement = new Vector2(0, 0);
+            Size.Y = texture.Height;
+            Size.X = texture.Width;
+            Speed = new Vector2(0,0);
+            AllowedMoveField = new Rectangle(0, 0, 0, 0);
+        }
+
         public Sprite(Texture2D texture, Vector2 placement, Vector2 size, Rectangle allowedMoveField)
         {
             Texture = texture;
@@ -41,6 +51,10 @@ namespace Pong
             AllowedMoveField = allowedMoveField;
         }
 
+        public void SetPosition(float X, float Y)
+        {
+            Placement = new Vector2(X, Y);
+        }
         public void ChangePosition(float timeStep)
         { 
             if (Placement.Y + Size.Y > AllowedMoveField.Bottom)             

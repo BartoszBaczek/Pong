@@ -48,31 +48,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\AccelerateBallicon.png">
+    <Compile Include="Textures\GameTextures\AccelerateBallicon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>AccelerateBallicon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\background.jpg">
+    <Compile Include="Textures\GameTextures\background.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\ball.png">
+    <Compile Include="Textures\GameTextures\ball.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>ball</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\DeaccelerateBallicon.png">
+    <Compile Include="Textures\GameTextures\DeaccelerateBallicon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>DeaccelerateBallicon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\Pad.png">
+    <Compile Include="Textures\GameTextures\Pad.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>Pad</Name>
       <Importer>TextureImporter</Importer>
@@ -87,6 +87,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Textures\MenuTextures\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--
