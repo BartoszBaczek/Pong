@@ -55,6 +55,12 @@ namespace Pong
         {
             Placement = new Vector2(X, Y);
         }
+
+        public void SetPosition(Vector2 position)
+        {
+            Placement = position;
+        }
+
         public void ChangePosition(float timeStep)
         { 
             if (Placement.Y + Size.Y > AllowedMoveField.Bottom)             
@@ -72,6 +78,11 @@ namespace Pong
                 leftPlayer.Points++;
             else if (Placement.X < AllowedMoveField.Left)
                 RightPlayer.Points++;
+        }
+
+        public void NavigateMenu()
+        {
+            
         }
     }
 }

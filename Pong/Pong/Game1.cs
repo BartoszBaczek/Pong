@@ -27,7 +27,7 @@ namespace Pong
         Sprite gameBall;
         Bonus gameBonus1;
         Bonus gameBonus2;
-        GameModeController gameModeController;
+        MenuController gameModeController;
 
         Sprite menuBackground;
         Sprite menuOpenPong;
@@ -37,6 +37,10 @@ namespace Pong
         Sprite menuEasy;
         Sprite menuMedium;
         Sprite menuHard;
+
+        Sprite menuStartGamePressed;
+        Sprite menuCreditsPressed;
+        Sprite menuGameModePressed;
 
 
 
@@ -61,7 +65,7 @@ namespace Pong
 
         protected override void Initialize()
         {
-            gameModeController = new GameModeController(GameModeController.GameMode.Menu);
+            gameModeController = new MenuController(MenuController.GameMode.Menu, MenuController.CursorPosition.StartGame);
             base.Initialize();
         }
 
@@ -83,14 +87,17 @@ namespace Pong
                 gameBonus1 = new Bonus(Content.Load<Texture2D>("Textures/GameTextures/AccelerateBallicon"), new Vector2(30, 30), 1);
                 gameBonus2 = new Bonus(Content.Load<Texture2D>("Textures/GameTextures/DeaccelerateBallIcon"), new Vector2(30, 30), 2);
 
-                menuBackground = new Sprite(Content.Load<Texture2D>("MenuBackground"));
-                menuCredits = new Sprite(Content.Load<Texture2D>("MenuCredits"));
-                menuEasy = new Sprite(Content.Load<Texture2D>("MenuEasy"));
-                menuMedium = new Sprite(Content.Load<Texture2D>("MenuMedium"));
-                menuHard = new Sprite(Content.Load<Texture2D>("MenuHard"));
-                menuGameMode = new Sprite(Content.Load<Texture2D>("MenuGameMode"));
-                menuOpenPong = new Sprite(Content.Load<Texture2D>("MenuOpenPong"));
-                menuStartGame = new Sprite(Content.Load<Texture2D>("MenuStartGame"));
+                menuBackground = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuBackground"));
+                menuCredits = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuCredits"));
+                menuEasy = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuEasy"));
+                menuMedium = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuMedium"));
+                menuHard = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuHard"));
+                menuGameMode = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuGameMode"));
+                menuOpenPong = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuOpenPong"));
+                menuStartGame = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuStartGame"));
+                menuStartGamePressed = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuStartGamePressed"));
+                menuCreditsPressed = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuCreditsPressed"));
+                menuGameModePressed = new Sprite(Content.Load<Texture2D>("Textures/MenuTextures/MenuGameModePressed"));
 
 
             }
@@ -107,7 +114,7 @@ namespace Pong
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (gameModeController.Mode == GameModeController.GameMode.Menu)
+            if (gameModeController.Mode == MenuController.GameMode.Menu)
             {
                 menuOpenPong.SetPosition((ScreenWidth - menuOpenPong.Size.X) / 2, 20);
                 menuStartGame.SetPosition((ScreenWidth - menuStartGame.Size.X) / 2, menuOpenPong.Placement.Y + menuOpenPong.Size.Y + 80);
@@ -116,9 +123,14 @@ namespace Pong
                 menuEasy.SetPosition(((ScreenWidth - menuEasy.Size.X) / 2) + 150, menuGameMode.Placement.Y);
                 menuMedium.SetPosition(((ScreenWidth - menuMedium.Size.X) / 2) + 150, menuGameMode.Placement.Y);
                 menuHard.SetPosition(((ScreenWidth - menuHard.Size.X) / 2) + 150, menuGameMode.Placement.Y);
+                menuStartGamePressed.SetPosition(menuStartGame.Placement);
+                menuCreditsPressed.SetPosition(menuCredits.Placement); 
+                menuGameModePressed.SetPosition(menuGameMode.Placement);
+
+                gameModeController.Navigate();
             }
 
-            if (gameModeController.Mode == GameModeController.GameMode.Game)
+            if (gameModeController.Mode == MenuController.GameMode.Game)
             {
                 gameBall.ChangePosition((float) (gameTime.ElapsedGameTime.TotalMilliseconds/30));
                 gamePlayer1.PadSteering((float) (gameTime.ElapsedGameTime.TotalMilliseconds/30));
@@ -128,16 +140,16 @@ namespace Pong
                 gameBall.UpdatePoints(gamePlayer1, gamePlayer2);
             }
 
-
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-                spriteBatch.Begin();
-            if ((gameModeController.Mode == GameModeController.GameMode.Game))
+            spriteBatch.Begin();
+
+
+            if ((gameModeController.Mode == MenuController.GameMode.Game))
             {
                 spriteBatch.Draw(gameBackground.Texture, gameBackground.Border, Color.White);
                 spriteBatch.Draw(gameBall.Texture, gameBall.Border, Color.White);
@@ -153,19 +165,41 @@ namespace Pong
                 if (gameBonus2.State == 1)
                     spriteBatch.Draw(gameBonus2.Texture, gameBonus2.Border, Color.White);
             }
-            if ((gameModeController.Mode == GameModeController.GameMode.Menu))
+
+
+            if ((gameModeController.Mode == MenuController.GameMode.Menu))
             {
                 spriteBatch.Draw(menuBackground.Texture, menuBackground.Border, Color.White);
-                spriteBatch.Draw(menuCredits.Texture, menuCredits.Border, Color.White);
-                spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
-                spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
-                spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);
-                spriteBatch.Draw(menuGameMode.Texture, menuGameMode.Border, Color.White);
                 spriteBatch.Draw(menuOpenPong.Texture, menuOpenPong.Border, Color.White);
-                spriteBatch.Draw(menuStartGame.Texture, menuStartGame.Border, Color.White);
 
+                switch (gameModeController.TextChosen)
+                {
+                    case MenuController.CursorPosition.StartGame:
+                        spriteBatch.Draw(menuStartGamePressed.Texture, menuStartGamePressed.Border, Color.White);
+                        spriteBatch.Draw(menuCredits.Texture, menuCredits.Border, Color.White);
+                        spriteBatch.Draw(menuGameMode.Texture, menuGameMode.Border, Color.White);
+                        spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
+                        spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
+                        spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);
+                        break;
+                    case MenuController.CursorPosition.Credits:
+                        spriteBatch.Draw(menuStartGame.Texture, menuStartGame.Border, Color.White);
+                        spriteBatch.Draw(menuCreditsPressed.Texture, menuCreditsPressed.Border, Color.White);
+                        spriteBatch.Draw(menuGameMode.Texture, menuGameMode.Border, Color.White);
+                        spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
+                        spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
+                        spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);
+                        break;
+                    case MenuController.CursorPosition.GameMode:
+                        spriteBatch.Draw(menuStartGame.Texture, menuStartGame.Border, Color.White);
+                        spriteBatch.Draw(menuCredits.Texture, menuCredits.Border, Color.White);
+                        spriteBatch.Draw(menuGameModePressed.Texture, menuGameModePressed.Border, Color.White);
+                        spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
+                        spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
+                        spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);
+                        break;
+                }
             }
-
             spriteBatch.End();
             base.Draw(gameTime);
             }
