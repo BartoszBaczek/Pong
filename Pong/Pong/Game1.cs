@@ -178,6 +178,7 @@ namespace Pong
                         spriteBatch.Draw(menuStartGamePressed.Texture, menuStartGamePressed.Border, Color.White);
                         spriteBatch.Draw(menuCredits.Texture, menuCredits.Border, Color.White);
                         spriteBatch.Draw(menuGameMode.Texture, menuGameMode.Border, Color.White);
+                        //TODO
                         spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
                         spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
                         spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);
@@ -186,6 +187,7 @@ namespace Pong
                         spriteBatch.Draw(menuStartGame.Texture, menuStartGame.Border, Color.White);
                         spriteBatch.Draw(menuCreditsPressed.Texture, menuCreditsPressed.Border, Color.White);
                         spriteBatch.Draw(menuGameMode.Texture, menuGameMode.Border, Color.White);
+                        //TODO
                         spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
                         spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
                         spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);
@@ -194,6 +196,7 @@ namespace Pong
                         spriteBatch.Draw(menuStartGame.Texture, menuStartGame.Border, Color.White);
                         spriteBatch.Draw(menuCredits.Texture, menuCredits.Border, Color.White);
                         spriteBatch.Draw(menuGameModePressed.Texture, menuGameModePressed.Border, Color.White);
+                        //TODO
                         spriteBatch.Draw(menuEasy.Texture, menuEasy.Border, Color.White);
                         spriteBatch.Draw(menuMedium.Texture, menuMedium.Border, Color.White);
                         spriteBatch.Draw(menuHard.Texture, menuMedium.Border, Color.White);

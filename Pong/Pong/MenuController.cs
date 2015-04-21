@@ -24,7 +24,8 @@ namespace Pong
         }
 
         public GameMode Mode { get; set; }
-        public CursorPosition TextChosen { get; set;}
+        public CursorPosition TextChosen { get; set; }
+        public CursorPosition PrevTextChosen { get; set; }
 
 
         public MenuController(GameMode _mode, CursorPosition _cursorPosition)
@@ -49,32 +50,35 @@ namespace Pong
 
         }
 
+        KeyboardState prevKeyPressed;
         public void Navigate()
         {
+            var keyPressed = Keyboard.GetState();
+            
+
             switch (TextChosen)
             {
                 case CursorPosition.StartGame:
-                    if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                    if (keyPressed.IsKeyDown(Keys.Up) && prevKeyPressed.IsKeyUp(Keys.Up))
                         TextChosen = CursorPosition.GameMode;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                    else if (keyPressed.IsKeyDown(Keys.Down) && prevKeyPressed.IsKeyUp(Keys.Down))
                         TextChosen = CursorPosition.Credits;
                     break;
-
                 case CursorPosition.Credits:
-                    if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                    if (keyPressed.IsKeyDown(Keys.Up) && prevKeyPressed.IsKeyUp(Keys.Up))
                         TextChosen = CursorPosition.StartGame;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                    else if (keyPressed.IsKeyDown(Keys.Down) && prevKeyPressed.IsKeyUp(Keys.Down))
                         TextChosen = CursorPosition.GameMode;
                     break;
-
                 case CursorPosition.GameMode:
-                    if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                    if (keyPressed.IsKeyDown(Keys.Up) && prevKeyPressed.IsKeyUp(Keys.Up))
                         TextChosen = CursorPosition.Credits;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                    else if (keyPressed.IsKeyDown(Keys.Down) && prevKeyPressed.IsKeyUp(Keys.Down))
                         TextChosen = CursorPosition.StartGame;
                     break;
-
             }
+            prevKeyPressed = keyPressed;
+
         }
 
     }
